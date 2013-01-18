@@ -13,7 +13,7 @@ Csscover without deadweight，pure JS——Found unused selector from your style
 ---
 ###使用它比Csscover简单多了###
 
-*   Install [node](http://nodejs.org).
+*   Install [node@0.8.x](http://nodejs.org).
 *   No Ruby.
 *   No Deadweight.
 
