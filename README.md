@@ -1,7 +1,6 @@
 #DoverJS
 ========
 Csscover without deadweight，pure JS——Found unused selector from your style-sheet files
-Use [phantomjs](https://github.com/ariya/phantomjs)
 ## Why DoverJS ?
 > DoverJS 简单，移动，纯爷们，纯JS，无混合Ruby
 > 支持的动态脚本改变DOM的选择器匹配，伪类的匹配
