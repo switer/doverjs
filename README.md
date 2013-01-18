@@ -2,45 +2,59 @@
 ========
 Csscover without deadweight，pure JS——Found unused selector from your style-sheet files
 Use [phantomjs](https://github.com/ariya/phantomjs)
-## Why csscover ?
-> csscover基于[deadweight](https://github.com/aanand/deadweight), 功能上肯定是会优于deadweight的，
-> 且添加了selector的容错机制与对中文字符的处理机制，更重要的是，支持deadweight所不支持的动态脚本改变DOM
-> 影响的选择器匹配
+## Why DoverJS ?
+> DoverJS 简单，移动，纯爷们，纯JS，无混合Ruby
+> 支持的动态脚本改变DOM的选择器匹配，伪类的匹配
 
 ##Use case
 
-- 检查页面冗余style rule</li>
+- 检查样式文件在制定页面的冗余style-rules
 
-How to use
+##How to use
 ---
-###要安装的东西比较多###
-*   Install [ruby](http://rubyinstaller.org/) and gems for deadweight.
-*   Install [deadweight](https://github.com/aanand/deadweight) `gem install deadweight`.
+###使用它比Csscover简单多了###
+
 *   Install [node](http://nodejs.org).
+*   No Ruby.
+*   No Deadweight.
 
-Clone it from github :
+Install it in npm :
 
-    git clone https://github.com/switer/csscover.git
-
-or Install it in npm :
-
-    npm install csscover -g
+    npm install doverjs -g
     
-Runing : 
+usage : 
 
-    csscover --help
     
-package.js :
+      Usage: doverjs [options] <file ...>
+    
+      Options:
+    
+        -h, --help                 output usage information
+        -V, --version              output the version number
+        -d, --destination <files>  destination file <file, file, ...>
+        -j, --json <file>          using json config file
+        -o, --output <file>        Output result
+        -s, --style <files>        covering style-sheet file <file, file, ...>
+    
+    
+批量查找的配置文件 :
 
-    //这个文件是样式文件的配置，在example上有
-    style : 样式文件
-    html [
-        'url',//被检查的网址
-        {//可以用于url + hash的形式 prefix +　suffix
-            prefix : purl, //网址前缀
-            suffix : ['','#'] //网址后缀
-        }
-    ]
+    //这个是文件配置,使用时把注释去掉，避免JSON解析出错  e.g example/package.js
+    {
+        //请用 "/双引号 代替 '/单引号
+        style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
+        html [
+            //被检查的网址,远程文件请加上"http://"否则识别为本地文件; 
+            //"http://baidu.com"无法解读时，请加上www("http://www.baidu.com")
+            "http://sliders.jitsu.com",
+            {
+                //Mutiple html url
+                //可以用于url + hash的形式 prefix +　suffix
+                prefix : "http://localhost:3000/", //网址前缀
+                suffix : ["index.html","#","path/file.js"] //网址后缀
+            }
+        ]
+    }
 
 ##Support
   &lt;guankaishe@gmail.com&gt;
