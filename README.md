@@ -7,7 +7,7 @@ Csscover without deadweight，pure JS——Found unused selector from your style
 
 ##Use case
 
-- 检查样式文件在制定页面的冗余style-rules
+- 检查样式文件在指定页面的冗余style-rules
 
 ##How to use
 ---
@@ -34,7 +34,13 @@ usage :
         -j, --json <file>          using json config file
         -o, --output <file>        Output result
         -s, --style <files>        covering style-sheet file <file, file, ...>
+
+Easy Use it :
     
+*    Usage one :<br />
+        `doverjs -s xxx.css -d http://slider.jitsu.com -o out`
+*    Usage two :<br />
+        `doverjs -j package.js`
     
 批量查找的配置文件 :
 
