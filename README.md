@@ -2,7 +2,7 @@
 ========
 Csscover without deadweight，pure JS——Found unused selector from your style-sheet files
 ## Why DoverJS ?
-> DoverJS 简单，易用，纯爷们，纯JS，无混合Ruby
+> DoverJS 简单，易用，纯爷们，纯JS，无混合Ruby, <br />
 > 支持的动态脚本改变DOM的选择器匹配，伪类的匹配
 
 ##Use case
