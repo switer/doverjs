@@ -30,7 +30,7 @@ usage :
     
         -h, --help                 output usage information
         -V, --version              output the version number
-        -d, --destination <files>  destination file <file, file, ...>
+        -d, --destination <files>  destination HTML URL <file, file, ...>
         -j, --json <file>          using json config file
         -o, --output <file>        Output result
         -s, --style <files>        covering style-sheet file <file, file, ...>
