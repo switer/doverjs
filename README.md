@@ -60,6 +60,12 @@ Easy Use it :
             }
         ]
     }
+##Can Be Optimized Point
+
+*   大样式文件导致的报错
+*   复合样式文件导致的执行时间长优化
+*   命令窗口的输出可控
+*   支持Linux，Mac
 
 ##Support
   &lt;guankaishe@gmail.com&gt;
