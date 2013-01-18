@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+var program = require('commander'),
+	chiProc = require('child_process'),
+	currentPath = process.cwd(),
+	NOTICE_MSG = 'Runing...Covering will takes a few time, Please wait a monment',
+	cmd;
+
+program
+  .version('0.1.0')
+  .usage('[options] <file ...>')
+  .option('-d, --destination <files>', 'destination file <file, file, ...>')
+  .option('-j, --json <file>', 'using json config file')
+  .option('-o, --output <file>', 'Output result')
+  .option('-s, --style <files>', 'covering style-sheet file <file, file, ...>')
+  .parse(process.argv);
+
+process.chdir(__dirname + '/../');
+var outputFile = program.output || '';
+ if (program.json) {
+ 	cmd = "node phantomrun.js json '" + currentPath + "' " + program.json + ' ' + outputFile
+ 	console.log(NOTICE_MSG);
+ 	chiProc.exec(cmd, function (e, std, ste) {
+		e && console.log( e );
+		console.log( std );
+		console.log( ste );
+ 	});
+ } else if (program.style && program.destination) {
+ 	cmd = "node phantomrun.js source '" + currentPath + "' " + program.style + ' ' + program.destination + ' ' + outputFile;
+ 	console.log(NOTICE_MSG);
+	chiProc.exec(cmd, function (e, std, ste) {
+		e && console.log( e );
+		console.log( std );
+		console.log( ste );
+	});
+ } else if (!program.style && program.destination) {
+ 	console.log('Use -s <file>,... covering style-sheet file');
+ } else if (program.style && !program.destination) {
+ 	console.log('Use -d <file>,... select destination file');
+ }

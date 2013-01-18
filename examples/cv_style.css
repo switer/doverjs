@@ -1,0 +1,21 @@
+/*COPYRIGHT(C)UCWEB 2012.*/
+/*CSSSDK.*/
+/*2012.07.06*/
+
+/** @NAME:CSS STYLE
+        @TYPE:
+    */
+/**/
+*:focus{outline:none;}
+body,a,a:link,a:visited,a:active{text-decoration:none;color:#333;}
+a:hover{}
+body{width:100%;height:100%;color:#333;font:500 normal 17px/1.9 arial;font-family:;background:#F2F2F2;}
+.btn{display:block;text-align:center;border-radius:3px;}
+.ui-input-text{font-size:15px;background:#fff;border:1px solid #c5ced4;height:40px;border-radius:5px;}
+
+.btn{display:block;text-align:center;border-radius:3px;}
+
+/** @NAME:CSS STYLE
+        @TYPE:
+    */
+/**/
