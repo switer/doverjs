@@ -2,7 +2,7 @@
 ========
 Find unused selector from your style-sheet files to the specified HTML URI
 ## Why DoverJS ?
-> DoverJS --- Simple, Convenient, Effective; Base on Nodejs; Could find unused selector from DHTML
+> DoverJS --- Simple, Convenient, Effective; Base on Nodejs; Could find unused selector from DHTML <br />
 > 简单、易用、有效，基于NodeJS，无混合Ruby, <br />
 > 支持的动态脚本改变DOM的选择器匹配、伪类的匹配
 
