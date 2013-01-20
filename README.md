@@ -64,7 +64,7 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
     }
 ##Subsequent Optimized Point
 
-*   大样式文件导致的报错
+*   大样式文件导致的报错(Compeleted @0.1.1)
 *   复合样式文件导致的执行时间长优化
 *   命令窗口的输出可控
 *   支持Linux，Mac
