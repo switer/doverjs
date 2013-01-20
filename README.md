@@ -7,11 +7,12 @@ Found unused selector from your style-sheet files to the specified HTML URI
 
 ##Use case
 
-- 检查样式文件在指定页面的冗余style-rules
+- Found unused selector from your style-sheet files to the specified HTML URI
+- (检查样式文件在指定页面的冗余style-rules)
 
 ##How to use
 ---
-###使用它比Csscover简单多了###
+###Easy to use than Csscover(使用它比Csscover简单多了)###
 
 *   Install [node@0.8.x](http://nodejs.org).
 *   No Ruby.
@@ -42,14 +43,14 @@ Easy Use it :
 *    Usage two :<br />
         `doverjs -j package.js`
     
-批量查找的配置文件 :
+Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 
-    //这个是文件配置,使用时把注释去掉，避免JSON解析出错  e.g example/package.js
+    //Remove comments from this file（这个是文件配置,使用时把注释去掉，避免JSON解析出错）  e.g example/package.js
     {
-        //请用 "/双引号 代替 '/单引号
+        //use " instead of ' in here (请用 "/双引号 代替 '/单引号)
         style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
         html [
-            //被检查的网址,远程文件请加上"http://"否则识别为本地文件; 
+            //Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
             //"http://baidu.com"无法解读时，请加上www("http://www.baidu.com")
             "http://sliders.jitsu.com",
             {
