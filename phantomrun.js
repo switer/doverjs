@@ -9,7 +9,8 @@ var	HTML_TEMP_URI = 'http://localhost:3013/temp/',
 	HTML_TEMP_FILE_PREFIX = 'run_result_',
 	HTML_TEMP_FILE_SUFFIX = '.html',
 	DEADWEIGHT_LIB_PATH = './deadweight/bin/deadweight',
-	CAPTURE_HTML_SCRIPT = './lib/coverhtml.js';
+	CAPTURE_HTML_SCRIPT = './lib/coverhtml.js',
+	SELECTOR_TEMP_FILE =  'doverjs_temp_file';
 
 var	args = process.argv.slice(2),
 	optionType = args.shift(),
@@ -145,8 +146,8 @@ function _captureHTMLWhithArray (htmls, styles, callback) {
 	for ( var s = 0; s < styles.length ; s ++ ) {
 		var styleRules = styles[s];
 		//@param <html1 html2 ...> TODO<encode:uri{encode:sel1,encode:sel2,...]encode:uri{encode:sel1,...>
-		cmd = 'phantomjs ' + CAPTURE_HTML_SCRIPT + ' ' + htmls.join(' ') + ' ' + parser.parse(styleRules["content"], true).join(',');
-		console.log(cmd);
+		fs.writeFileSync(localPath + '/' + SELECTOR_TEMP_FILE, parser.parse(styleRules["content"], true).join(','), 'UTF-8');
+		cmd = 'phantomjs ' + CAPTURE_HTML_SCRIPT + ' ' + htmls.join(' ') + ' ' + localPath + '/';
 		cp.exec(cmd, function (err, stdout,stderr) {
 			err && console.log(err);
 			console.log(stderr);
