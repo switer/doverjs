@@ -69,6 +69,7 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 *   支持HTTPS 资源(Compeleted @0.1.1)
 *   windows下，带空格文件路径导致无法运行（Compeleted @0.1.2）
 *   批量处理配置文件的语法解析优化
+*   自动删除功能
 *   复合样式文件导致的执行时间长优化
 *   命令窗口的输出可控
 *   支持Linux，Mac
