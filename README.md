@@ -58,8 +58,8 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
             {
                 //Mutiple html url
                 //可以用于url + hash的形式 prefix +　suffix
-                prefix : "http://localhost:3000/", //网址前缀
-                suffix : ["index.html","#","path/file.js"] //网址后缀
+                "prefix" : "http://localhost:3000/", //网址前缀
+                "suffix" : ["index.html","#","path/file.js"] //网址后缀
             }
         ]
     }
