@@ -44,6 +44,13 @@ Easy Use it :
         `doverjs -s xxx.css -d http://slider.jitsu.com -o out`
 *    Usage two :<br />
         `doverjs -j package.js`
+*    Console process result :<br />
+        `doverjs -j package.js -c`
+    ![process result](https://raw.github.com/switer/resource/master/process_result.png)
+*    Console statistics result :<br />
+        `doverjs -j package.js -S`
+    ![process result](https://raw.github.com/switer/resource/master/statistics.png)
+
     
 Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 
