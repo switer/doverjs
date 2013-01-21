@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var program = require('commander'),
 	chiProc = require('child_process'),
-	currentPath = process.cwd(),
+	currentPath = encodeURIComponent(process.cwd()),
 	NOTICE_MSG = 'Runing...Covering will takes a few time, Please wait a monment',
 	cmd;
 
@@ -15,9 +15,9 @@ program
   .parse(process.argv);
 
 process.chdir(__dirname + '/../');
-var outputFile = program.output || '';
+var outputFile = encodeURIComponent(program.output) || '';
  if (program.json) {
- 	cmd = "node phantomrun.js json '" + currentPath + "' " + program.json + ' ' + outputFile
+ 	cmd = "node phantomrun.js json '" + currentPath + "' " + encodeURIComponent(program.json) + ' ' + outputFile
  	console.log(NOTICE_MSG);
  	chiProc.exec(cmd, function (e, std, ste) {
 		e && console.log( e );
@@ -25,7 +25,7 @@ var outputFile = program.output || '';
 		console.log( ste );
  	});
  } else if (program.style && program.destination) {
- 	cmd = "node phantomrun.js source '" + currentPath + "' " + program.style + ' ' + program.destination + ' ' + outputFile;
+ 	cmd = "node phantomrun.js source '" + currentPath + "' " + encodeURIComponent(program.style) + ' ' + encodeURIComponent(program.destination) + ' ' + outputFile;
  	console.log(NOTICE_MSG);
 	chiProc.exec(cmd, function (e, std, ste) {
 		e && console.log( e );

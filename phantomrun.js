@@ -14,7 +14,7 @@ var	HTML_TEMP_URI = 'http://localhost:3013/temp/',
 
 var	args = process.argv.slice(2),
 	optionType = args.shift(),
-	localPath  = args.shift().replace(/^\'/,'').replace(/\'$/,''),
+	localPath  = decodeURIComponent(args.shift()).replace(/^\'/,'').replace(/\'$/,''),
 	params;
 
 var REGEXES  = {
@@ -27,7 +27,7 @@ this.config = {
 	}
 }
 if (optionType === this.config.OPTION_TYPE.JSON) {
-	var packageJsName = args.shift()
+	var packageJsName = decodeURIComponent(args.shift())
 	try {
 		var params = JSON.parse(_readPackgeFile(localPath + '\\' + packageJsName));
 		params.html  = _populateLocalURL(_readHTMLPropertiesAsArray(params.html), localPath, true)
@@ -40,12 +40,13 @@ if (optionType === this.config.OPTION_TYPE.JSON) {
 
 } else if (optionType === this.config.OPTION_TYPE.SOURCE) {
 	params = {}
-	var cssParams = args.shift().split(','),
-		htmlParams   = args.shift().split(',');
+	var cssParams = decodeURIComponent(args.shift()).split(','),
+		htmlParams   = decodeURIComponent(args.shift()).split(',');
 	params.html  = _populateLocalURL(htmlParams, localPath, true)
 	params.style = _populateLocalURL(cssParams, localPath)
 }
 var outputFile = args.shift();
+outputFile && (outputFile = decodeURIComponent(outputFile));
 process.chdir(__dirname);
 var that = this;
 
@@ -147,7 +148,7 @@ function _captureHTMLWhithArray (htmls, styles, callback) {
 		var styleRules = styles[s];
 		//@param <html1 html2 ...> TODO<encode:uri{encode:sel1,encode:sel2,...]encode:uri{encode:sel1,...>
 		fs.writeFileSync(localPath + '/' + SELECTOR_TEMP_FILE, parser.parse(styleRules["content"], true).join(','), 'UTF-8');
-		cmd = 'phantomjs ' + CAPTURE_HTML_SCRIPT + ' ' + htmls.join(' ') + ' ' + localPath + '/';
+		cmd = 'phantomjs ' + CAPTURE_HTML_SCRIPT + ' ' + htmls.join(' ') + ' ' + encodeURIComponent(localPath + '/');
 		cp.exec(cmd, function (err, stdout,stderr) {
 			err && console.log(err);
 			console.log(stderr);
