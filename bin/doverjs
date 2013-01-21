@@ -8,16 +8,23 @@ var program = require('commander'),
 program
   .version('0.1.0')
   .usage('[options] <file ...>')
+  .option('-c, --console', 'print process result in console')
   .option('-d, --destination <files>', 'destination file <file, file, ...>')
   .option('-j, --json <file>', 'using json config file')
   .option('-o, --output <file>', 'Output result')
+  .option('-S, --statistics', 'print statistics in console')
   .option('-s, --style <files>', 'covering style-sheet file <file, file, ...>')
   .parse(process.argv);
-
+function encodeOpts(optionstr) {
+	return encodeURIComponent(optionstr).replace(/\-/g, ',');
+}
 process.chdir(__dirname + '/../');
 var outputFile = encodeURIComponent(program.output) || '';
+var optionstr = 'doverjs params ' + (program.console ? '-c ' : '') + (program.statistics ? '-S ' : '');
  if (program.json) {
- 	cmd = "node phantomrun.js json '" + currentPath + "' " + encodeURIComponent(program.json) + ' ' + outputFile
+ 	optionstr += '-j';
+ 	optionstr = encodeOpts(optionstr);
+ 	cmd = "node phantomrun.js " + optionstr + " '" + currentPath + "' " + encodeURIComponent(program.json) + ' ' + outputFile
  	console.log(NOTICE_MSG);
  	chiProc.exec(cmd, function (e, std, ste) {
 		e && console.log( e );
@@ -25,7 +32,9 @@ var outputFile = encodeURIComponent(program.output) || '';
 		console.log( ste );
  	});
  } else if (program.style && program.destination) {
- 	cmd = "node phantomrun.js source '" + currentPath + "' " + encodeURIComponent(program.style) + ' ' + encodeURIComponent(program.destination) + ' ' + outputFile;
+ 	optionstr += '-s';
+ 	optionstr = encodeOpts(optionstr);
+ 	cmd = "node phantomrun.js " + optionstr + " '" + currentPath + "' " + encodeURIComponent(program.style) + ' ' + encodeURIComponent(program.destination) + ' ' + outputFile;
  	console.log(NOTICE_MSG);
 	chiProc.exec(cmd, function (e, std, ste) {
 		e && console.log( e );
