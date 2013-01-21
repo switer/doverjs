@@ -45,10 +45,10 @@ Easy Use it :
 *    Usage two :<br />
         `doverjs -j package.js`
 *    Console process result :<br />
-        `doverjs -j package.js -c`
+        `doverjs -j package.js -c`<br />
     ![process result](https://raw.github.com/switer/resource/master/process_result.png)
 *    Console statistics result :<br />
-        `doverjs -j package.js -S`
+        `doverjs -j package.js -S`<br />
     ![process result](https://raw.github.com/switer/resource/master/statistics.png)
 
     
