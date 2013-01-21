@@ -3,6 +3,7 @@
 Find unused selector from your style-sheet files to the specified HTML URI
 ## Why DoverJS ?
 > DoverJS --- Simple, Convenient, Effective; Base on Nodejs; Could find unused selector from DHTML <br />
+> Support Pseudo-classes, DOM Inserted <br />
 > 简单、易用、有效，基于NodeJS，无混合Ruby, <br />
 > 支持的动态脚本改变DOM的选择器匹配、伪类的匹配
 
@@ -66,7 +67,8 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 
 *   大样式文件导致的报错(Compeleted @0.1.1)
 *   支持HTTPS 资源(Compeleted @0.1.1)
-*   windows下，带空格文件路径导致无法运行
+*   windows下，带空格文件路径导致无法运行（Compeleted @0.1.2）
+*   批量处理配置文件的语法解析优化
 *   复合样式文件导致的执行时间长优化
 *   命令窗口的输出可控
 *   支持Linux，Mac
