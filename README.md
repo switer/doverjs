@@ -82,6 +82,7 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 *   支持Linux，Mac
 
 ##Support
+ 如果图片看不见，怎么办？？囧。github的raw被墙了
   &lt;guankaishe@gmail.com&gt;
 
 
