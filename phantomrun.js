@@ -10,7 +10,8 @@ var	HTML_TEMP_URI = 'http://localhost:3013/temp/',
 	HTML_TEMP_FILE_SUFFIX = '.html',
 	DEADWEIGHT_LIB_PATH = './deadweight/bin/deadweight',
 	CAPTURE_HTML_SCRIPT = './lib/coverhtml.js',
-	SELECTOR_TEMP_FILE =  'doverjs_temp_file';
+	SELECTOR_TEMP_FILE =  'doverjs_temp_file',
+	JSON_TEMP_FILE = 'doverjs_temp_out.json';
 
 var	args = process.argv.slice(2),
 	optionType = args.shift(),
@@ -31,7 +32,8 @@ if (optionType === this.config.OPTION_TYPE.JSON) {
 	try {
 		var params = JSON.parse(_readPackgeFile(localPath + '\\' + packageJsName));
 		params.html  = _populateLocalURL(_readHTMLPropertiesAsArray(params.html), localPath, true)
-		params.style = _populateLocalURL(params.style, localPath)
+		params.style = _populateLocalURL(params.style, localPath);
+
 	} catch (e) {
 		console.log('Read configure file Error ! Please check it exist or not, or format error !'.red);
 		throw e;
@@ -46,6 +48,7 @@ if (optionType === this.config.OPTION_TYPE.JSON) {
 	params.style = _populateLocalURL(cssParams, localPath)
 }
 var outputFile = args.shift();
+if (outputFile === 'undefined') outputFile = null;
 outputFile && (outputFile = decodeURIComponent(outputFile));
 process.chdir(__dirname);
 var that = this;
@@ -148,14 +151,17 @@ function _captureHTMLWhithArray (htmls, styles, callback) {
 		var styleRules = styles[s];
 		//@param <html1 html2 ...> TODO<encode:uri{encode:sel1,encode:sel2,...]encode:uri{encode:sel1,...>
 		fs.writeFileSync(localPath + '/' + SELECTOR_TEMP_FILE, parser.parse(styleRules["content"], true).join(','), 'UTF-8');
+
 		cmd = 'phantomjs ' + CAPTURE_HTML_SCRIPT + ' ' + htmls.join(' ') + ' ' + encodeURIComponent(localPath + '/');
 		cp.exec(cmd, function (err, stdout,stderr) {
 			err && console.log(err);
 			console.log(stderr);
+			var outJSON = fs.readFileSync( localPath + '/' + JSON_TEMP_FILE, 'UTF-8');			
+				fs.unlinkSync( localPath + '/' + JSON_TEMP_FILE );
 			var output = '',
 				logOutPut = "";
 			try {
-				var results = JSON.parse(stdout);
+				var results = JSON.parse(outJSON);
 				output += ('Covering ' + styleRules["uri"]).cyan + '\n';
 				logOutPut += 'Covering ' + styleRules["uri"] + '\n';
 				for (var i = 0, len = results.length; i < len; i ++ ) {
@@ -180,6 +186,7 @@ function _captureHTMLWhithArray (htmls, styles, callback) {
 				}
 				callback(output, logOutPut);
 			} catch (e) {
+				console.log("Result JSON Object Parsing ERROR ! Something  goes wrond, Contact me(guankaishe@gmail.com)");
 				console.log(e);
 			}
 		});
