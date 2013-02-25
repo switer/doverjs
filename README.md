@@ -53,23 +53,24 @@ Easy Use it :
 
     
 Multiple Cover use configuration files （批量覆盖的配置文件 ）:
-
-    //Remove comments from this file（这个是文件配置,使用时把注释去掉，避免JSON解析出错）  e.g example/package.js
-    {
-        //use " instead of ' in here (请用 "/双引号 代替 '/单引号)
-        style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
-        html [
-            //Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
-            //"http://baidu.com"无法解读时，请加上www("http://www.baidu.com")
-            "http://sliders.jitsu.com",
-            {
-                //Mutiple html url
-                //可以用于url + hash的形式 prefix +　suffix
-                "prefix" : "http://localhost:3000/", //网址前缀
-                "suffix" : ["index.html","#","path/file.js"] //网址后缀
-            }
-        ]
-    }
+```javascript
+//Remove comments from this file（这个是文件配置,使用时把注释去掉，避免JSON解析出错）  e.g example/package.js
+{
+    //use " instead of ' in here (请用 "/双引号 代替 '/单引号)
+    style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
+    html [
+        //Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
+        //"http://baidu.com"无法解读时，请加上www("http://www.baidu.com")
+        "http://sliders.jitsu.com",
+        {
+            //Mutiple html url
+            //可以用于url + hash的形式 prefix +　suffix
+            "prefix" : "http://localhost:3000/", //网址前缀
+            "suffix" : ["index.html","#","path/file.js"] //网址后缀
+        }
+    ]
+}
+```
 ##Subsequent Optimized Point
 
 *   大样式文件导致的报错(Compeleted @0.1.1)
