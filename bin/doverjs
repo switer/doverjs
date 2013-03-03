@@ -10,6 +10,7 @@ program
   .usage('[options] <file ...>')
   .option('-c, --console', 'print process result in console')
   .option('-d, --destination <files>', 'destination file <file, file, ...>')
+  .option('-D, --delete', 'delete matched selector')
   .option('-j, --json <file>', 'using json config file')
   .option('-o, --output <file>', 'Output result')
   .option('-S, --statistics', 'print statistics in console')
