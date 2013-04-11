@@ -1,6 +1,6 @@
 #DoverJS
 ========
-Find unused selector from your style-sheet files to the specified HTML URI
+Find unused css selectors from your style-sheet files to the specified HTML URI
 ## Why DoverJS ?
 > DoverJS --- Simple, Convenient, Effective; Base on Nodejs; Could find unused selector from DHTML <br />
 > Support Pseudo-classes, DOM Inserted <br />
