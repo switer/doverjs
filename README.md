@@ -58,7 +58,7 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 {
     //use " instead of ' in here (请用 "/双引号 代替 '/单引号)
     style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
-    html [
+    html : [
         //Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
         //"http://baidu.com"无法解读时，请加上www("http://www.baidu.com")
         "http://sliders.jitsu.com",
