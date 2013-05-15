@@ -30,12 +30,14 @@ usage :
       Usage: doverjs [options] <file ...>
     
       Options:
-    
+      
         -h, --help                 output usage information
         -V, --version              output the version number
-        -d, --destination <files>  destination HTML URL <file, file, ...>
+        -c, --console              print process result in console
+        -d, --destination <files>  destination file <file, file, ...>
         -j, --json <file>          using json config file
         -o, --output <file>        Output result
+        -S, --statistics           print statistics in console
         -s, --style <files>        covering style-sheet file <file, file, ...>
 
 Easy Use it :
