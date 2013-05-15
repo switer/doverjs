@@ -81,9 +81,9 @@ Install it in npm :
 ```
 ## Subsequent Optimized Point
 
-*   大样式文件导致的报错(Compeleted @0.1.1)
-*   支持HTTPS 资源(Compeleted @0.1.1)
-*   windows下，带空格文件路径导致无法运行（Compeleted @0.1.2）
+*   大样式文件导致的报错(`Compeleted @0.1.1`)
+*   支持HTTPS 资源(`Compeleted @0.1.1`)
+*   windows下，带空格文件路径导致无法运行(`Compeleted @0.1.2`)
 *   批量处理配置文件的语法解析优化
 *   自动删除功能
 *   复合样式文件导致的执行时间长优化
