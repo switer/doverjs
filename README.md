@@ -12,9 +12,9 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 - Found unused selector from your style-sheet files to the specified HTML URI
 - (检查样式文件在指定页面的冗余style-rules)
 
-##How to use
+## How to use
 ---
-###Easy to use than Csscover(使用它比Csscover简单多了)###
+### Easy to use than Csscover(使用它比Csscover简单多了)###
 
 *   Install [node@0.8.x](http://nodejs.org).
 *   No Ruby.
@@ -24,23 +24,23 @@ Install it in npm :
 
     npm install doverjs -g
     
-usage : 
+### Helping : 
 
     
       Usage: doverjs [options] <file ...>
     
       Options:
       
-        -h, --help                 output usage information(使用说明)
+        -h, --help                 output usage information             (使用说明)
         -V, --version              output the version number(版本信息)
-        -c, --console              print process result in console(在命令行窗口输出处理结果)
-        -d, --destination <files>  destination file <file, file, ...>(指定要检查的HTML文件)
-        -j, --json <file>          using json config file(使用JSON文件配置来批量处理)
-        -o, --output <file>        Output result(输出结果到指定文件)
+        -c, --console              print process result in console      (在命令行窗口输出处理结果)
+        -d, --destination <files>  destination file <file, file, ...>   (指定要检查的HTML文件,可以是远程文件)
+        -j, --json <file>          using json config file               (使用JSON文件配置来批量处理)
+        -o, --output <file>        Output result                        (输出结果到指定文件)
         -S, --statistics           print statistics in console(输出统计信息)
-        -s, --style <files>        covering style-sheet file <file, file, ...>(指定要检查无用规则的样式文件)
+        -s, --style <files>        covering style-sheet file <file, file, ...>(指定要检查无用规则的样式文件,可以是远程文件)
 
-Easy Use it :
+### Usage :
     
 *    Usage one :<br />
         `doverjs -s xxx.css -d http://slider.jitsu.com -o out`
@@ -54,7 +54,8 @@ Easy Use it :
     ![process result](https://raw.github.com/switer/resource/master/statistics.png)
 
     
-Multiple Cover use configuration files （批量覆盖的配置文件 ）:
+### Multiple Cover use configuration files （批量覆盖的配置文件 ）:
+
 ```javascript
 //Remove comments from this file（这个是文件配置,使用时把注释去掉，避免JSON解析出错）  e.g example/package.js
 {
@@ -73,7 +74,7 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
     ]
 }
 ```
-##Subsequent Optimized Point
+## Subsequent Optimized Point
 
 *   大样式文件导致的报错(Compeleted @0.1.1)
 *   支持HTTPS 资源(Compeleted @0.1.1)
@@ -84,7 +85,7 @@ Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 *   命令窗口的输出可控
 *   支持Linux，Mac
 
-##Support
+## Support
  如果图片看不见，怎么办？？囧。github的raw被墙了
   &lt;guankaishe@gmail.com&gt;
 
