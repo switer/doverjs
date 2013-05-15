@@ -70,6 +70,11 @@ Install it in npm :
             //可以用于url + hash的形式 prefix +　suffix
             "prefix" : "http://localhost:3000/", //网址前缀
             "suffix" : ["index.html","#","path/file.js"] //网址后缀
+            /**yield:
+            *       http://localhost:3000/index.html,
+            *       http://localhost:3000/#,
+            *       http://localhost:3000/path/file.js,
+            **/
         }
     ]
 }
