@@ -14,15 +14,13 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 
 ## How to use
 ---
-### Easy to use than Csscover(使用它比Csscover简单多了)###
+### Easy to use  Csscover(使用它比Csscover简单多了)###
 
-*   Install [node@0.8.x](http://nodejs.org).
-*   No Ruby.
-*   No Deadweight.
+    Install [node@0.8.x](http://nodejs.org).
 
-Install it in npm :
+    Install it in npm :
 
-    npm install doverjs -g
+        npm install doverjs -g
     
 ### Helping : 
 

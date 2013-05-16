@@ -11,4 +11,5 @@ body :hover{color: blue}
 ::selection{color: blue}
 input[type="button"] {top:200px;}
 span a {margin-top: 10px;}
+.hello {border:1px;}
 /*sdsdsd你好*/
