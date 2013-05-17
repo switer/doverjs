@@ -55,19 +55,19 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 ### Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 
 ```javascript
-//Remove comments from this file（这个是文件配置,使用时把注释去掉，避免JSON解析出错）  e.g example/package.js
+//e.g example/package.js
 {
-    //use " instead of ' in here (请用 "/双引号 代替 '/单引号)
+ 
     style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
     html : [
         //Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
         //"http://baidu.com"无法解读时，请加上www("http://www.baidu.com")
-        "http://sliders.jitsu.com",
+        http://sliders.jitsu.com",
         {
             //Mutiple html url
             //可以用于url + hash的形式 prefix +　suffix
-            "prefix" : "http://localhost:3000/", //网址前缀
-            "suffix" : ["index.html","#","path/file.js"] //网址后缀
+            prefix : "http://localhost:3000/", //网址前缀
+            suffix : ["index.html","#","path/file.js"] //网址后缀
             /**yield:
             *       http://localhost:3000/index.html,
             *       http://localhost:3000/#,
