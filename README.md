@@ -82,11 +82,12 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 *   大样式文件导致的报错(`Compeleted @0.1.1`)
 *   支持HTTPS 资源(`Compeleted @0.1.1`)
 *   windows下，带空格文件路径导致无法运行(`Compeleted @0.1.2`)
+*   优化package配置文件的解析，配置文件可以使用单引号与注释(`Compeleted @0.1.4`)
+*   支持Linux，Mac(`Compeleted @0.1.4`)
 *   批量处理配置文件的语法解析优化
 *   自动删除功能
 *   复合样式文件导致的执行时间长优化
 *   命令窗口的输出内容可选项化
-*   支持Linux，Mac
 
 ## Support
  如果图片看不见，怎么办？？囧。github的raw被墙了
