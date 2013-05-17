@@ -1,11 +1,10 @@
+/*配置文件*/
 {
-	"style" : [
-		"style_sdk.css"
-	],
+	"style" : 'style.css', //单个样式
 	"html" : [
 		{
-			"prefix" :"www.baidu.com",
-			"suffix" :['']
+			"prefix" :"http://www.baidu.com",
+			"suffix" :["#"]
 		}
 		
 	]

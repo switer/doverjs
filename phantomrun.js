@@ -1,11 +1,12 @@
 
-var cp = require('child_process'),
-	program = require('commander'),
-	colors = require('colors'),
-	fs = require('fs'),
-	parser = require('./lib/css_parser'),
-	loader = require('./lib/loader'),
-	_ = require('./lib/underscore-min.js');
+var cp 			= require('child_process'),
+	program 	= require('commander'),
+	colors 		= require('colors'),
+	UglifyJS 	= require("uglify-js"),
+	fs 			= require('fs'),
+	parser 		= require('./lib/css_parser'),
+	loader 		= require('./lib/loader'),
+	_ 			= require('./lib/underscore-min.js');
 
 var	HTML_TEMP_URI = 'http://localhost:3013/temp/',
 	HTML_TEMP_FILE_PREFIX = 'run_result_',
@@ -40,13 +41,20 @@ this.config = {
 if (program.json) {
 	var packageJsName = decodeURIComponent(args.shift())
 	try {
-		var params = JSON.parse(_readPackgeFile(localPath + '\\' + packageJsName));
+		var cmd = UglifyJS.minify(
+			"JSON.parse(" + _readPackgeFile(localPath + '\\' + packageJsName) + ")" 
+			, {fromString: true}
+		);
+		console.log(cmd)
+		var params = eval("(function () { return " + cmd.code.replace(/^JSON\.parse/, '') + '})()');
 		params.html  = _populateLocalURL(_readHTMLPropertiesAsArray(params.html), localPath, true)
 		params.style = _populateLocalURL(params.style, localPath);
 
 	} catch (e) {
+		console.log(e)
 		console.log('Read configure file Error ! Please check it exist or not, or format error !'.red);
-		throw e;
+		return;
+		//throw e;
 	}
 } else if (program.source) {
 	params = {}
@@ -71,7 +79,7 @@ function _initialize () {
 }
 function _start () {
 	var htmls = params.html
-		, styles = params["style"]
+		, styles = params.style
 		, stylesopts = ' -s ' + styles.join(' -s ');
 	var styleContent = loader.loadResource(styles, function (data) {
 		if (data) {
@@ -229,16 +237,20 @@ function _captureHTMLWhithArray (htmls, styles, callback) {
 
 				callback(output, logOutPut, statisticsOut);
 			} catch (e) {
-				console.log("Result JSON Object Parsing ERROR ! Something  goes wrond, Contact me(guankaishe@gmail.com)");
 				console.log(e);
+				console.log("Result JSON Object Parsing ERROR ! Something  goes wrond, Contact me(guankaishe@gmail.com)".red);
+				return;
 			}
 		});
 	}
 
 }
-function _populateLocalURL (urlArray, path, isEncoding) {
-	var pUrlArray = [];
-	var uri;
+function _populateLocalURL (uris, path, isEncoding) {
+	var pUrlArray = [],
+		urlArray = [],
+		uri;
+	if ( typeof uris === 'string') urlArray.push(uris);
+	else urlArray = uris;
 	for (var i = 0; i < urlArray.length ; i ++) {
 		/**
 		*	http:// | https:// | file:// | A:/ | (linux root /)
