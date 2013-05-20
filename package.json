@@ -22,5 +22,5 @@
     "doverjs": "bin/doverjs"
   },
   "readmeFilename": "README.md",
-  "description": "DoverJS--Find unused seletor from your style-sheet to DHTML URI"
+  "description": "Find unused css selector from your style-sheet files, Support for dynamic scripting."
 }
