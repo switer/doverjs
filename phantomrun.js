@@ -4,8 +4,9 @@ var cp 			= require('child_process'),
 	colors 		= require('colors'),
 	UglifyJS 	= require("uglify-js"),
 	fs 			= require('fs'),
-	parser 		= require('./lib/css_parser'),
+	cssParser 	= require('./lib/css_parser'),
 	loader 		= require('./lib/loader'),
+	ptParser 	= require('./lib/parser'),
 	_ 			= require('./lib/underscore-min.js');
 
 var	HTML_TEMP_URI 			= 'http://localhost:3013/temp/',
@@ -14,13 +15,15 @@ var	HTML_TEMP_URI 			= 'http://localhost:3013/temp/',
 	DEADWEIGHT_LIB_PATH 	= './deadweight/bin/deadweight',
 	CAPTURE_HTML_SCRIPT 	= './lib/coverhtml.js',
 	SELECTOR_TEMP_FILE 		= 'doverjs_temp_file',
-	JSON_TEMP_FILE 			= 'doverjs_temp_out.json';
+	JSON_TEMP_FILE 			= 'doverjs_temp_out.json',
 	REGEXES  				= {URI_REGEX : /^http(?=):\/\/|^https:\/\/|^file:\/\/|^[a-zA-Z]:\/|^\//};
 
 var	args = process.argv.slice(2),
 	optionType = args.shift(),
 	localPath  = decodeURIComponent(args.shift()).replace(/^\'/,'').replace(/\'$/,''),
-	params;
+	params,
+	htmlParams,
+	cssParams;
 
 //本地配置
 this.config = {
@@ -49,8 +52,9 @@ if (program.json) { //JSON参数格式
 		);
 
 		var params = eval("(function () { return " + cmd.code.replace(/^JSON\.parse/, '') + '})()');
-		params.html  = _populateLocalURL(_readHTMLPropertiesAsArray(params.html), localPath, true)
-		params.style = _populateLocalURL(params.style, localPath);
+		params.html = _readHTMLPropertiesAsArray(params.html);
+		// params.html  = _populateLocalURL(_readHTMLPropertiesAsArray(params.html), localPath, true)
+		// params.style = _populateLocalURL(params.style, localPath);
 
 	} catch (e) {
 		console.log(e)
@@ -59,11 +63,15 @@ if (program.json) { //JSON参数格式
 	}
 } else if (program.source) { //文件URI参数格式
 	params = {}
-	var cssParams = decodeURIComponent(args.shift()).split(','),
-		htmlParams   = decodeURIComponent(args.shift()).split(',');
-	params.html  = _populateLocalURL(htmlParams, localPath, true)
-	params.style = _populateLocalURL(cssParams, localPath)
+	params.style = decodeURIComponent(args.shift()).split(','),
+	params.html   = decodeURIComponent(args.shift()).split(',');
+	// params.html  = _populateLocalURL(htmlParams, localPath, true)
+	// params.style = _populateLocalURL(cssParams, localPath)
+} else {
+	console.log('Params error !'.red);
+	return;
 }
+
 //输出文件地址
 var outputFile = args.shift();
 if (outputFile === 'undefined') outputFile = null;
@@ -79,14 +87,16 @@ function _initialize () {
 	that.isServerStart = false;
 }
 //启动方法
-function _start () {
-	var htmls = params.html
-		, styles = params.style
-		, stylesopts = ' -s ' + styles.join(' -s ');
+function _start (params) {
+	var htmls = _populateLocalURL(params.html, localPath, true)
+		, styles = _populateLocalURL(params.style, localPath);
+
 	var styleContent = loader.loadResource(styles, function (data) {
 		if (data) {
 
-			_captureHTMLWhithArray(htmls, data, function (stdout, logOut, statisticsOut) {
+			// _captureHTMLWhithArray(htmls, data, function (stdout, logOut, statisticsOut) {
+			
+			ptParser.run(htmls, data, localPath, function (stdout, logOut, statisticsOut) {
 				program.console && console.log(stdout);
 				program.statistics && console.log(statisticsOut);
 				if (outputFile) {
@@ -150,7 +160,7 @@ function _captureHTMLWhithArray (htmls, styles, callback) {
 	for ( var s = 0; s < styles.length ; s ++ ) {
 		var styleRules = styles[s];
 		//@param <html1 html2 ...> TODO<encode:uri{encode:sel1,encode:sel2,...]encode:uri{encode:sel1,...>
-		fs.writeFileSync(localPath + '/' + SELECTOR_TEMP_FILE, parser.parse(styleRules["content"], true).join(','), 'UTF-8');
+		fs.writeFileSync(localPath + '/' + SELECTOR_TEMP_FILE, cssParser.parse(styleRules["content"], true).join(','), 'UTF-8');
 
 		cmd = 'phantomjs ' + CAPTURE_HTML_SCRIPT + ' ' + htmls.join(' ') + ' ' + encodeURIComponent(localPath + '/');
 		cp.exec(cmd, function (err, stdout,stderr) {
@@ -254,4 +264,4 @@ function _readPackgeFile (path) {
 	var content =  fs.readFileSync(path, 'UTF-8');
   return content;
 }
-_start();
+_start(params);
