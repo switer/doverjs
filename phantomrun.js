@@ -8,29 +8,21 @@ var cp 			= require('child_process'),
 	loader 		= require('./lib/loader'),
 	_ 			= require('./lib/underscore-min.js');
 
-var	HTML_TEMP_URI = 'http://localhost:3013/temp/',
-	HTML_TEMP_FILE_PREFIX = 'run_result_',
-	HTML_TEMP_FILE_SUFFIX = '.html',
-	DEADWEIGHT_LIB_PATH = './deadweight/bin/deadweight',
-	CAPTURE_HTML_SCRIPT = './lib/coverhtml.js',
-	SELECTOR_TEMP_FILE =  'doverjs_temp_file',
-	JSON_TEMP_FILE = 'doverjs_temp_out.json';
+var	HTML_TEMP_URI 			= 'http://localhost:3013/temp/',
+	HTML_TEMP_FILE_PREFIX 	= 'run_result_',
+	HTML_TEMP_FILE_SUFFIX 	= '.html',
+	DEADWEIGHT_LIB_PATH 	= './deadweight/bin/deadweight',
+	CAPTURE_HTML_SCRIPT 	= './lib/coverhtml.js',
+	SELECTOR_TEMP_FILE 		= 'doverjs_temp_file',
+	JSON_TEMP_FILE 			= 'doverjs_temp_out.json';
+	REGEXES  				= {URI_REGEX : /^http(?=):\/\/|^https:\/\/|^file:\/\/|^[a-zA-Z]:\/|^\//};
 
 var	args = process.argv.slice(2),
 	optionType = args.shift(),
 	localPath  = decodeURIComponent(args.shift()).replace(/^\'/,'').replace(/\'$/,''),
 	params;
 
-program
-  .usage('[options]')
-  .option('-c, --console', 'Console process result')
-  .option('-j, --json','covering method is JSON configure')
-  .option('-s, --source','covering method is Source URI')
-  .option('-S, --statistics','Console statistics result')
-  .parse(decodeURIComponent(optionType.replace(/\,/g, '-')).split(' '));
-var REGEXES  = {
-		URI_REGEX : /^http(?=):\/\/|^https:\/\/|^file:\/\/|^[a-zA-Z]:\/|^\//
-	};
+//本地配置
 this.config = {
 	OPTION_TYPE : {
 		JSON : 'json',
@@ -38,14 +30,24 @@ this.config = {
 	}
 }
 
-if (program.json) {
+//格式化命令参数
+program
+  .usage('[options]')
+  .option('-c, --console', 'Console process result')
+  .option('-j, --json','covering method is JSON configure')
+  .option('-s, --source','covering method is Source URI')
+  .option('-S, --statistics','Console statistics result')
+  .parse(decodeURIComponent(optionType.replace(/\,/g, '-')).split(' '));
+  
+//填充参数
+if (program.json) { //JSON参数格式
 	var packageJsName = decodeURIComponent(args.shift())
 	try {
 		var cmd = UglifyJS.minify(
 			"JSON.parse(" + _readPackgeFile(localPath + '\\' + packageJsName) + ")" 
 			, {fromString: true}
 		);
-		console.log(cmd)
+
 		var params = eval("(function () { return " + cmd.code.replace(/^JSON\.parse/, '') + '})()');
 		params.html  = _populateLocalURL(_readHTMLPropertiesAsArray(params.html), localPath, true)
 		params.style = _populateLocalURL(params.style, localPath);
@@ -54,37 +56,36 @@ if (program.json) {
 		console.log(e)
 		console.log('Read configure file Error ! Please check it exist or not, or format error !'.red);
 		return;
-		//throw e;
 	}
-} else if (program.source) {
+} else if (program.source) { //文件URI参数格式
 	params = {}
 	var cssParams = decodeURIComponent(args.shift()).split(','),
 		htmlParams   = decodeURIComponent(args.shift()).split(',');
 	params.html  = _populateLocalURL(htmlParams, localPath, true)
 	params.style = _populateLocalURL(cssParams, localPath)
 }
+//输出文件地址
 var outputFile = args.shift();
 if (outputFile === 'undefined') outputFile = null;
 outputFile && (outputFile = decodeURIComponent(outputFile));
+//切换目录
 process.chdir(__dirname);
-var that = this;
-
 
 /**
 *	runing initialize
 **/
-
+var that = this;
 function _initialize () {
 	that.isServerStart = false;
 }
+//启动方法
 function _start () {
 	var htmls = params.html
 		, styles = params.style
 		, stylesopts = ' -s ' + styles.join(' -s ');
 	var styleContent = loader.loadResource(styles, function (data) {
 		if (data) {
-			// var styleRules = parser.parseAll(data, true);
-				// styleRuleParam = styleRules.join(',');
+
 			_captureHTMLWhithArray(htmls, data, function (stdout, logOut, statisticsOut) {
 				program.console && console.log(stdout);
 				program.statistics && console.log(statisticsOut);
@@ -140,30 +141,12 @@ function _startHTTPServer (callback) {
 	that._serverPid = proc.pid;
 }
 /**
-*	Covering...Find verbose selector
+*	Covering...Find verbose selectors to arrays
 **/
-function _deadweightStyle (styles, htmls, deadweightCallback) {
-	// process.chdir(localPath);
-	cmd = 'ruby ' + DEADWEIGHT_LIB_PATH + styles + ' ' + htmls + ' -o ' + localPath + '/' + outputFile
-	cp.exec('ruby ' + DEADWEIGHT_LIB_PATH + styles + ' ' + htmls + ' -o ' + localPath + '/' + outputFile, function (err, stdout,stderr) {
-		console.log('Covered result in : ' + outputFile.grey);
-		err && console.log(err);
-		console.log(stdout);
-		console.log(stderr);
-		deadweightCallback && deadweightCallback(err);
-	});
-}
-
 function _captureHTMLWhithArray (htmls, styles, callback) {
 	var cmd;
 	var stylesStr, styleArr = [];
-	//TODO optm
-	// for(var ind = 0; ind < styles.length; ind ++) {
-	// 	console.log(parser.parse(styles[ind]["content"], true).join(','));
-	// 	stylesStr = encodeURIComponent(styles[ind]['uri']) + '{' + parser.parse(styles[ind]["content"], true).join(',');
-	// 	styleArr.push(stylesStr);
-	// }
-	// console.log(styleArr.join('['));
+
 	for ( var s = 0; s < styles.length ; s ++ ) {
 		var styleRules = styles[s];
 		//@param <html1 html2 ...> TODO<encode:uri{encode:sel1,encode:sel2,...]encode:uri{encode:sel1,...>
