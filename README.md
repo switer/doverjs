@@ -91,9 +91,14 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
             {style:'xxx.css', html:'http://www.baidu.com'}, 
             //success callback
             function (results, outputs) {
-                    var unusedSels = results.unused, //unused selectors
-                        usedSels   = results.used, //used selectors
-                        errorsSels = results.error; //error match selectors
+                    //@Array
+                    var unusedSels = results.unused, //unused selectors 样式文件中不被使用的选择器
+                        usedSels   = results.used, //used selectors 已使用的选择器
+                        errorsSels = results.error; //error match selectors 匹配错误的选择器
+                   //@String
+                    var stdout = outputs.stdout, //命令终端输出的样式文件解析结果，带颜色格式
+                        stat   = outputs.statistics, //命令终端输出的统计结构，带颜色格式
+                        logs   = outputs.log; //输出的结果（stdout + statistics），无颜色格式
             },
             //error callback
             function (err) {
