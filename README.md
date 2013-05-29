@@ -73,7 +73,40 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
         }
     ]
 }
+
 ```
+
+## API Reference
+假如你在npm中安装了doverjs，你可以在nodejs的应用中这样使用：
+
+    var dover = require('doverjs');
+
+使用示例：
+```javascript
+    dover.cover(
+            /**
+            *  params
+            *  style与html的值可以为数组，如{style:['xxx.css'], html:['x1.com','x2.com']}
+            **/
+            {style:'xxx.css', html:'http://www.baidu.com'}, 
+            //success callback
+            function (results, outputs) {
+                    //@Array
+                    var unusedSels = results.unused, //unused selectors 样式文件中不被使用的选择器
+                        usedSels   = results.used, //used selectors 已使用的选择器
+                        errorsSels = results.error; //error match selectors 匹配错误的选择器
+                   //@String
+                    var stdout = outputs.stdout, //命令终端输出的样式文件解析结果，带颜色格式
+                        stat   = outputs.statistics, //命令终端输出的统计结构，带颜色格式
+                        logs   = outputs.log; //输出的结果（stdout + statistics），无颜色格式
+            },
+            //error callback
+            function (err) {
+                    
+            }
+    );
+```
+
 ## Subsequent Optimized Point
 
 *   大样式文件导致的报错(`Compeleted @0.1.1`)
@@ -82,6 +115,8 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 *   优化package配置文件的解析，配置文件可以使用单引号与注释(`Compeleted @0.1.4`)
 *   支持Linux，Mac(`Compeleted @0.1.4`)
 *   命令窗口的输出内容可选项化(`Compeleted @0.1.4`)
+*   @media选择器提取与忽略@keyframes选择器(`Compeleted @2.0.0`)
+*   支持API Reference(`Compeleted @2.0.0`)
 *   批量处理配置文件的语法解析优化
 *   自动删除功能
 *   复合样式文件导致的执行时间长优化
