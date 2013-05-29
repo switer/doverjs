@@ -84,8 +84,11 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 使用示例：
 
     dover.cover(
-            //params
-            {style:'xxx.css', html:'http://www.baidu.com'},
+            /**
+            *  params
+            *  style与html的值可以为数组，如{style:['xxx.css'], html:['x1.com','x2.com']}
+            **/
+            {style:'xxx.css', html:'http://www.baidu.com'}, 
             //success callback
             function (results, outputs) {
                     var unusedSels = results.unused, //unused selectors
