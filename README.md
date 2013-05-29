@@ -1,5 +1,5 @@
 #DoverJS
-========
+---
 Find unused css selectors from your style-sheet files to the specified HTML URI
 ## Why DoverJS ?
 > DoverJS --- Simple, Convenient, Effective; Base on Nodejs; Could find unused selector from DHTML <br />
@@ -13,14 +13,14 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 - (检查样式文件在指定页面的冗余style-rules)
 
 ## How to use
----
-### Installing
+
+#### Installing
 
 * Install [node@0.8.x](http://nodejs.org).
 * Install it in npm :
         `npm install doverjs -g`
     
-### Helping : 
+#### Helping : 
 
     
       Usage: doverjs [options] <file ...>
@@ -36,7 +36,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
         -S, --statistics           print statistics in console          (输出统计信息)
         -s, --style <files>        covering style-sheet file <file, file, ...>(指定要检查无用规则的样式文件,可以是远程文件)
 
-### Usage :
+#### Usage :
     
 *    Usage one :<br />
         `doverjs -s xxx.css -d http://slider.jitsu.com -o out`
@@ -50,7 +50,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
     ![process result](https://raw.github.com/switer/resource/master/statistics.png)
 
     
-### Multiple Cover use configuration files （批量覆盖的配置文件 ）:
+#### Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 
 ```javascript
 //e.g example/package.js
@@ -80,7 +80,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 
 ```
 
-## API Reference
+### API Reference
 假如你在npm中安装了doverjs，你可以在nodejs的应用中这样使用：
 
     var dover = require('doverjs');
