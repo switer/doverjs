@@ -73,7 +73,32 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
         }
     ]
 }
+
 ```
+
+## API Reference
+假如你在npm中安装了doverjs，你可以在nodejs的应用中这样使用：
+
+    var dover = require('doverjs');
+
+使用示例：
+
+    dover.cover(
+            //params
+            {style:'xxx.css', html:'http://www.baidu.com'},
+            //success callback
+            function (results, outputs) {
+                    var unusedSels = results.unused, //unused selectors
+                        usedSels   = results.used, //used selectors
+                        errorsSels = results.error; //error match selectors
+            },
+            //error callback
+            function (err) {
+                    
+            }
+    );
+
+
 ## Subsequent Optimized Point
 
 *   大样式文件导致的报错(`Compeleted @0.1.1`)
