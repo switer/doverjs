@@ -92,15 +92,14 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
             *  params
             *  style与html的值可以为数组，如{style:['xxx.css'], html:['x1.com','x2.com']}
             **/
-            //远程链接资源地址必须以http或https开头必选
+            //远程链接资源地址必须以http或https开头 //必要参数
             {
                     //要检查的样式文件
-                    style:'xxx.css', 
-                    //检查的目标页面uri
-                    //原厂额
+                    style:'xxx.css',  //必要参数
+                    //检查的目标页面uri //必要参数
                     html:'http://www.baidu.com'
             }, 
-            //success callback 必选
+            //success callback //必要参数
             function (results, outputs) {
                     //@Array
                     var unusedSels = results.unused, //unused selectors 样式文件中不被使用的选择器
@@ -111,7 +110,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
                         stat   = outputs.statistics, //命令终端输出的统计结构，带颜色格式
                         logs   = outputs.log; //输出的结果（stdout + statistics），无颜色格式
             },
-            //error callback 可选
+            //error callback //可选参数
             function (err) {
                     
             }
