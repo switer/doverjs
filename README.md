@@ -82,7 +82,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
     var dover = require('doverjs');
 
 使用示例：
-
+```javascript
     dover.cover(
             /**
             *  params
@@ -100,7 +100,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
                     
             }
     );
-
+```
 
 ## Subsequent Optimized Point
 
