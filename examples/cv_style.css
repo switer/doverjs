@@ -19,3 +19,12 @@ body{width:100%;height:100%;color:#333;font:500 normal 17px/1.9 arial;font-famil
         @TYPE:
     */
 /**/
+@media screen and (min-width: 420px) {
+}
+@media screen and (min-width: 420px) {
+  .input {}
+}
+
+@media screen and (min-width: 420px) {  
+  .body {}
+}
