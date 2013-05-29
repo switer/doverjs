@@ -7,20 +7,18 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 > 简单、易用、有效，基于NodeJS，无混合Ruby, <br />
 > 支持的动态脚本改变DOM的选择器匹配、伪类的匹配
 
-##Use case
+## Use case
 
 - Found unused selector from your style-sheet files to the specified HTML URI
 - (检查样式文件在指定页面的冗余style-rules)
 
 ## How to use
 ---
-### Easy to use  Csscover(使用它比Csscover简单多了)###
+### Installing
 
-    Install [node@0.8.x](http://nodejs.org).
-
-    Install it in npm :
-
-        npm install doverjs -g
+* Install [node@0.8.x](http://nodejs.org).
+* Install it in npm :
+        `npm install doverjs -g`
     
 ### Helping : 
 
@@ -55,9 +53,8 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 ### Multiple Cover use configuration files （批量覆盖的配置文件 ）:
 
 ```javascript
-//Remove comments from this file（这个是文件配置,使用时把注释去掉，避免JSON解析出错）  e.g example/package.js
+//e.g example/package.js
 {
-    //use " instead of ' in here (请用 "/双引号 代替 '/单引号)
     style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
     html : [
         //Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
@@ -82,11 +79,12 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 *   大样式文件导致的报错(`Compeleted @0.1.1`)
 *   支持HTTPS 资源(`Compeleted @0.1.1`)
 *   windows下，带空格文件路径导致无法运行(`Compeleted @0.1.2`)
+*   优化package配置文件的解析，配置文件可以使用单引号与注释(`Compeleted @0.1.4`)
+*   支持Linux，Mac(`Compeleted @0.1.4`)
+*   命令窗口的输出内容可选项化(`Compeleted @0.1.4`)
 *   批量处理配置文件的语法解析优化
 *   自动删除功能
 *   复合样式文件导致的执行时间长优化
-*   命令窗口的输出内容可选项化
-*   支持Linux，Mac
 
 ## Support
  如果图片看不见，怎么办？？囧。github的raw被墙了
