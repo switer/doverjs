@@ -85,7 +85,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 
     var dover = require('doverjs');
 
-使用示例：
+检查不被使用的样式示例：
 ```javascript
     dover.cover(
             /**
@@ -94,26 +94,74 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
             **/
             //远程链接资源地址必须以http或https开头 //必要参数
             {
-                    //要检查的样式文件
-                    style:'xxx.css',  //必要参数
-                    //检查的目标页面uri //必要参数
-                    html:'http://www.baidu.com'
+                //要检查的样式文件
+                style:'xxx.css',  //必要参数
+                //检查的目标页面uri //必要参数
+                html:'http://www.baidu.com'
             }, 
             //success callback //必要参数
-            function (results, outputs) {
-                    //@Array
-                    var unusedSels = results.unused, //unused selectors 样式文件中不被使用的选择器
-                        usedSels   = results.used, //used selectors 已使用的选择器
-                        errorsSels = results.error; //error match selectors 匹配错误的选择器
-                   //@String
-                    var stdout = outputs.stdout, //命令终端输出的样式文件解析结果，带颜色格式
-                        stat   = outputs.statistics, //命令终端输出的统计结构，带颜色格式
-                        logs   = outputs.log; //输出的结果（stdout + statistics），无颜色格式
+            function (resp) {
+                /*
+                resp是一个数组，格式如下：
+                resp = [
+                            {
+                                uri : String, //资源地址-来自参数的style 属性
+                                results : { 
+                                	"unused" 	: Arrray<String>,//unused selectors 样式文件中不被使用的选择器
+                                	"used" 		: Arrray<String>,//used selectors 已使用的选择器
+                                	"errors" 	: Arrray<String>//error match selectors 匹配错误的选择器
+                                },
+                                outputs : { //outputs
+                                	"stdout" 		: String, //命令终端输出的样式文件解析结果，带颜色格式
+                                	"log" 			: String, //命令终端输出的统计结构，带颜色格式
+                                	"statistics" 	: String//输出的结果（stdout + statistics），无颜色格式
+                                }
+                            },
+                            {
+                                //Others ...
+                            }
+                        ]
+                */
             },
             //error callback //可选参数
             function (err) {
                     
             }
+    );
+```
+
+删除不被使用的样式示例：
+
+```javascript
+    dover.remove(
+            {
+                //要检查的样式文件uri
+                style:'xxx.css',  //必要参数
+                //检查的目标页面uri //必要参数
+                html:'http://www.baidu.com'
+            }, 
+            //success callback //必要参数
+            function (resp) {
+                /*
+                resp是一个数组，格式如下：
+                resp = [
+                            {
+                                uri : String, //资源地址-来自参数的style 属性
+                                results : { 
+                                    "unused" 	: Arrray<String>,//unused selectors 样式文件中不被使用的选择器
+                                	"used" 		: Arrray<String>,//used selectors 已使用的选择器
+                                	"errors" 	: Arrray<String>//error match selectors 匹配错误的选择器
+                                },
+                                content : String //删除不被使用的CSS样式后的文件内容
+                            },
+                            {
+                                //Others ...
+                            }
+                        ]
+                */
+            },
+            //error callback //可选参数
+            function (err) {}
     );
 ```
 
@@ -127,6 +175,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 *   命令窗口的输出内容可选项化(`Compeleted @0.1.4`)
 *   `@media`选择器提取与忽略`@keyframes`选择器(`Compeleted @2.0.0`)
 *   支持API Reference(`Compeleted @2.0.0`)
+*   增加remove API(`Compeleted @2.0.0`)
 *   批量处理配置文件的语法解析优化
 *   自动删除功能
 *   复合样式文件导致的执行时间长优化
