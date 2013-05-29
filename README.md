@@ -125,7 +125,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 *   优化package配置文件的解析，配置文件可以使用单引号与注释(`Compeleted @0.1.4`)
 *   支持Linux，Mac(`Compeleted @0.1.4`)
 *   命令窗口的输出内容可选项化(`Compeleted @0.1.4`)
-*   @media选择器提取与忽略@keyframes选择器(`Compeleted @2.0.0`)
+*   `@media`选择器提取与忽略`@keyframes`选择器(`Compeleted @2.0.0`)
 *   支持API Reference(`Compeleted @2.0.0`)
 *   批量处理配置文件的语法解析优化
 *   自动删除功能
