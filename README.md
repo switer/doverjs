@@ -86,7 +86,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
     var dover = require('doverjs');
 
 检查不被使用的样式示例：
-```javascript
+```
     dover.cover(
             /**
             *  params
@@ -132,7 +132,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 
 删除不被使用的样式示例：
 
-```javascript
+```
     dover.remove(
             {
                 //要检查的样式文件uri
