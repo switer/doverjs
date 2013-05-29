@@ -57,9 +57,13 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 {
     style : 'xxx.css', /* multiple style-sheet file: style : ["xxx.css",'aaa.css'] */
     html : [
-        //Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
-        //"http://baidu.com"无法解读时，请加上www("http://www.baidu.com")
-        "http://sliders.jitsu.com",
+        /*Add www to the URL , avoid URL Not Found(被检查的网址,远程文件请加上"http://"否则识别为本地文件); 
+        "http://baidu.com"无法解读时，请加上www("http://www.baidu.com")*/
+        //@One
+        "http://github.com/switer/imper",
+        //@One
+        "http://github.com/switer/DoverJS",
+        //@Multiple
         {
             //Mutiple html url
             //可以用于url + hash的形式 prefix +　suffix
@@ -88,8 +92,15 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
             *  params
             *  style与html的值可以为数组，如{style:['xxx.css'], html:['x1.com','x2.com']}
             **/
-            {style:'xxx.css', html:'http://www.baidu.com'}, 
-            //success callback
+            //远程链接资源地址必须以http或https开头必选
+            {
+                    //要检查的样式文件
+                    style:'xxx.css', 
+                    //检查的目标页面uri
+                    //原厂额
+                    html:'http://www.baidu.com'
+            }, 
+            //success callback 必选
             function (results, outputs) {
                     //@Array
                     var unusedSels = results.unused, //unused selectors 样式文件中不被使用的选择器
@@ -100,7 +111,7 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
                         stat   = outputs.statistics, //命令终端输出的统计结构，带颜色格式
                         logs   = outputs.log; //输出的结果（stdout + statistics），无颜色格式
             },
-            //error callback
+            //error callback 可选
             function (err) {
                     
             }
