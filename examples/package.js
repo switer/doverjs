@@ -3,7 +3,7 @@
 	"style" : 'style.css', //单个样式
 	"html" : [
 		{
-			prefix :"http://www.baidu.com",
+			"prefix" :"http://www.baidu.com",
 			"suffix" :["#"]
 		}
 		

@@ -36,8 +36,8 @@ this.config = {
 //格式化命令参数
 program
   .usage('[options]')
-  .option('-c, --console', 'Console process result')
   .option('-j, --json','covering method is JSON configure')
+  .option('-c, --console', 'Console process result')
   .option('-s, --source','covering method is Source URI')
   .option('-S, --statistics','Console statistics result')
   .parse(decodeURIComponent(optionType.replace(/\,/g, '-')).split(' '));
@@ -53,8 +53,6 @@ if (program.json) { //JSON参数格式
 
 		var params = eval("(function () { return " + cmd.code.replace(/^JSON\.parse/, '') + '})()');
 		params.html = _readHTMLPropertiesAsArray(params.html);
-		// params.html  = _populateLocalURL(_readHTMLPropertiesAsArray(params.html), localPath, true)
-		// params.style = _populateLocalURL(params.style, localPath);
 
 	} catch (e) {
 		console.log(e)
@@ -65,8 +63,6 @@ if (program.json) { //JSON参数格式
 	params = {}
 	params.style = decodeURIComponent(args.shift()).split(','),
 	params.html   = decodeURIComponent(args.shift()).split(',');
-	// params.html  = _populateLocalURL(htmlParams, localPath, true)
-	// params.style = _populateLocalURL(cssParams, localPath)
 } else {
 	console.log('Params error !'.red);
 	return;
@@ -88,23 +84,19 @@ function _initialize () {
 }
 //启动方法
 function _start (params) {
-	var htmls = _populateLocalURL(params.html, localPath, true)
-		, styles = _populateLocalURL(params.style, localPath);
 
-	var styleContent = loader.loadResource(styles, function (data) {
-		if (data) {
+	ptParser.cover(params, localPath, function (results, outputs) {
+		var stdout = outputs.stdout, 
+			logOut = outputs.log, 
+			statisticsOut = outputs.statistics;
 
-			// _captureHTMLWhithArray(htmls, data, function (stdout, logOut, statisticsOut) {
-			
-			ptParser.run(htmls, data, localPath, function (stdout, logOut, statisticsOut) {
-				program.console && console.log(stdout);
-				program.statistics && console.log(statisticsOut);
-				if (outputFile) {
-					fs.writeFileSync(localPath + '\\' + outputFile, logOut, 'UTF-8');
-				}
-				console.log('Cover Compeleted ! ' + (outputFile ? 'Logged on ' + outputFile : ''));
-			});
+		program.console && console.log(stdout);
+		program.statistics && console.log(statisticsOut);
+
+		if (outputFile) {
+			fs.writeFileSync(localPath + '\\' + outputFile, logOut, 'UTF-8');
 		}
+		console.log('Cover Compeleted ! ' + (outputFile ? 'Logged on ' + outputFile : ''));
 	});
 }
 /**
@@ -150,118 +142,10 @@ function _startHTTPServer (callback) {
 	//记住该服务进程
 	that._serverPid = proc.pid;
 }
-/**
-*	Covering...Find verbose selectors to arrays
-**/
-function _captureHTMLWhithArray (htmls, styles, callback) {
-	var cmd;
-	var stylesStr, styleArr = [];
-
-	for ( var s = 0; s < styles.length ; s ++ ) {
-		var styleRules = styles[s];
-		//@param <html1 html2 ...> TODO<encode:uri{encode:sel1,encode:sel2,...]encode:uri{encode:sel1,...>
-		fs.writeFileSync(localPath + '/' + SELECTOR_TEMP_FILE, cssParser.parse(styleRules["content"], true).join(','), 'UTF-8');
-
-		cmd = 'phantomjs ' + CAPTURE_HTML_SCRIPT + ' ' + htmls.join(' ') + ' ' + encodeURIComponent(localPath + '/');
-		cp.exec(cmd, function (err, stdout,stderr) {
-			err && console.log(err);
-			console.log(stderr);
-			var outJSON = fs.readFileSync( localPath + '/' + JSON_TEMP_FILE, 'UTF-8');			
-				fs.unlinkSync( localPath + '/' + JSON_TEMP_FILE );
-			var output = '',
-				logOutPut = "",
-				statisticsOut = "",
-				unusedArray = [];
-				usedArray = [];
-				errorArray = [];
-			try {
-				var results = JSON.parse(outJSON);
-				output += ('/*Covering ' + styleRules["uri"]).cyan + '*/\n';
-				logOutPut += '/*Covering ' + styleRules["uri"] + '*/\n';
-				for (var i = 0, len = results.length; i < len; i ++ ) {
-					var result = results[i];
-					output += '\n';
-					output += ('/*Parsing Url ' + decodeURIComponent(result['url'])).bold + '*/\n';
-					output += '/*found ' + result['matchedLen'].yellow + ' used selectors out of ' + new String(result['total']).yellow + '*/\n';
-					output += decodeURIComponent(result['matched']).green + '\n';
-					output += '/*found ' + result['unMatchedLen'].yellow + ' unused selectors out of ' + new String(result['total']).yellow + ' total' + '*/\n';
-					output += decodeURIComponent(result['unMatched']).magenta + '\n';
-					output += '/*parsed ' + result['errorMatchedLen'].yellow + ' error selectors out of ' + new String(result['total']).yellow + ' total' + '*/\n';
-					output += decodeURIComponent(result['errorMatched']).red ;
-
-					logOutPut += '\n';
-					logOutPut += '/*Parsing Url ' + decodeURIComponent(result['url']) + '*/\n';
-					logOutPut += '/*found ' + result['matchedLen'] + ' used selectors out of ' + result['total'] + '*/\n';
-					logOutPut += decodeURIComponent(result['matched']) + '\n';
-					logOutPut += '/*found ' + result['unMatchedLen'] + ' unused selectors out of ' + result['total'] + ' total*/' + '\n';
-					logOutPut += decodeURIComponent(result['unMatched']) + '\n';
-					logOutPut += '/*parsed ' + result['errorMatchedLen'] + ' error selectors out of ' + result['total'] + ' total*/' + '\n';
-					logOutPut += decodeURIComponent(result['errorMatched']) ;
-
-					result['unMatched'].length !== 0 && unusedArray.push(decodeURIComponent(result['unMatched']).split('\n'));
-					result['matched'].length !== 0 && usedArray.push(decodeURIComponent(result['matched']).split('\n'));
-					result['errorMatched'].length !== 0 && errorArray.push(decodeURIComponent(result['errorMatched']).split('\n'));
-				}
-				var unusedSels = _.union.apply(this, unusedArray);
-					usedSels = _.union.apply(this, usedArray);
-					errorSels = _.union.apply(this, errorArray);
-					
-					unusedLen = unusedSels.length,
-					usedLen = usedSels.length,
-					errorLen = errorSels.length,
-					totalLen = unusedLen + usedLen + errorLen;
-					statisticsOut += '\n\n/*Parsing result Count :*/ \n'.blue;
-					statisticsOut += '/*Found ' + (new String (unusedLen)).yellow + ' unused'.magenta + ' selectors*/ \n' + 
-								unusedSels.join('\n').magenta + '\n' + 
-								'/*Found ' + (new String (usedLen)).yellow + ' used'.green + ' selectors*/ \n' + 
-								usedSels.join('\n').green + '\n' + 
-								'/*Parsing ' + (new String (errorLen)).yellow + ' error'.red + ' selectors*/ \n' +
-								errorSels.join('\n').red + '\n' + 
-								'/*Total'.yellow + ' selectors : ' + (new String (totalLen)).yellow + '*/';
-
-					logOutPut += '\n/*Parsing result Count : \n';
-					logOutPut += '/*Found ' + unusedLen + ' unused selectors*/ \n' + 
-								unusedSels.join('\n') + '\n' + 
-								'/*Found ' + usedLen + ' used selectors*/ \n' + 
-								usedSels.join('\n') + '\n' + 
-								'/*Parsing ' + errorLen + ' error selectors*/\n' +
-								errorSels.join('\n') + '\n' + 
-								'/*total selectors : ' + totalLen + '*/';
-
-				callback(output, logOutPut, statisticsOut);
-			} catch (e) {
-				console.log(e);
-				console.log("Result JSON Object Parsing ERROR ! Something  goes wrond, Contact me(guankaishe@gmail.com)".red);
-				return;
-			}
-		});
-	}
-
-}
-function _populateLocalURL (uris, path, isEncoding) {
-	var pUrlArray = [],
-		urlArray = [],
-		uri;
-	if ( typeof uris === 'string') urlArray.push(uris);
-	else urlArray = uris;
-	for (var i = 0; i < urlArray.length ; i ++) {
-		/**
-		*	http:// | https:// | file:// | A:/ | (linux root /)
-		**/
-		if (!urlArray[i].match(REGEXES.URI_REGEX)) {
-			uri = path.replace(/\/$/, '') + '/' + urlArray[i];
-			isEncoding && (uri = encodeURIComponent(uri));
-			pUrlArray.push( uri );
-		} else {
-			uri = isEncoding ? encodeURIComponent(urlArray[i]) : urlArray[i];
-			pUrlArray.push( uri );
-		}
-	}
-	return pUrlArray;
-}
 
 function _readPackgeFile (path) {
 	var content =  fs.readFileSync(path, 'UTF-8');
   return content;
 }
+//start runing
 _start(params);
