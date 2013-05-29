@@ -28,12 +28,12 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
       Options:
       
         -h, --help                 output usage information             (使用说明)
-        -V, --version              output the version number(版本信息)
+        -V, --version              output the version number            (版本信息)
         -c, --console              print process result in console      (在命令行窗口输出处理结果)
         -d, --destination <files>  destination file <file, file, ...>   (指定要检查的HTML文件,可以是远程文件)
         -j, --json <file>          using json config file               (使用JSON文件配置来批量处理)
         -o, --output <file>        Output result                        (输出结果到指定文件)
-        -S, --statistics           print statistics in console(输出统计信息)
+        -S, --statistics           print statistics in console          (输出统计信息)
         -s, --style <files>        covering style-sheet file <file, file, ...>(指定要检查无用规则的样式文件,可以是远程文件)
 
 ### Usage :
