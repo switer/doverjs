@@ -9,8 +9,51 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 
 ## Use case
 
-- Found unused selector from your style-sheet files to the specified HTML URI
-- (检查样式文件在指定页面的冗余style-rules)
+##### style.css
+```css
+body {}
+.btn {}
+.unknow {}
+#main div {}
+.other a {}
+```
+
+##### index.html
+```html
+<html>
+<head></head>
+<body>
+<div class="btn"></div>
+<div id="main">
+    <div></div>
+</div>
+</body>
+</html>
+```
+
+对于`index.html`，`style.css`中的`.unknow`  `.other a`的样式没被用到，怎样自动检查出来呢？
+
+##### 试试doverjs：
+
+在命令终端使用
+```
+doverjs -s style.css -d index.html
+```
+
+在nodejs代码中使用
+```javascript
+var dover = require('doverjs');
+dover.cover({style:'style.css', html:'index.html'}, function (resp) {
+    //resp.....
+});
+```
+
+或者把没用的删除了
+```javascript
+dover.remove({style:'style.css', html:'index.html'}, function (resp) {
+    //resp.....
+});
+```
 
 ## How to use
 
