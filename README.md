@@ -37,7 +37,7 @@ body {}
 
 在命令终端使用
 ```
-doverjs -s style.css -d index.html
+doverjs -s style.css -d index.html -c
 ```
 
 在nodejs代码中使用
