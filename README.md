@@ -7,6 +7,14 @@ Find unused css selectors from your style-sheet files to the specified HTML URI
 > 简单、易用、有效，基于NodeJS，提供命令行工具与nodejs模块<br />
 > 支持由JS改变DOM导致的选择器变换、支持伪类选择器的匹配
 
+
+## Installation
+
+Using npm:
+```
+ npm install -g doverjs
+```
+
 ## Use case
 
 ##### style.css
@@ -58,14 +66,6 @@ dover.remove({style:'style.css', html:'index.html'}, function (resp) {
     //resp.....
 });
 ```
-
-## How to use
-
-#### Installing
-
-* Install [node@0.8.x](http://nodejs.org).
-* Install it in npm :
-        `npm install doverjs -g`
     
 #### Helping : 
 
