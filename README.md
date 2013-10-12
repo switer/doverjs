@@ -1,11 +1,19 @@
-#DoverJS
+doverjs
 ---
 Find unused css selectors from your style-sheet files to the specified HTML URI
-## Why DoverJS ?
+## Why doverjs ?
 > DoverJS --- Simple, Convenient, Effective; Base on Nodejs; Could find unused selector from DHTML <br />
 > Support Pseudo-classes, DOM Inserted <br />
 > 简单、易用、有效，基于NodeJS，提供命令行工具与nodejs模块<br />
 > 支持由JS改变DOM导致的选择器变换、支持伪类选择器的匹配
+
+
+## Installation
+
+Using npm:
+```
+ npm install -g doverjs
+```
 
 ## Use case
 
@@ -31,16 +39,19 @@ body {}
 </html>
 ```
 
-对于`index.html`，`style.css`中的`.unknow`  `.other a`的样式没被用到，怎样自动检查出来呢？
+> How to find the unused selectors __.unknow__  __.other a__ for __index.html__  from __style.css__ ? <br />
+> 对于__index.html__，__style.css__ 中的 __.unknow__  __.other a__ 的样式没被用到，怎样自动检查出来呢？
 
-##### 试试doverjs：
+##### Let's try doverjs (试试doverjs)：
 
-在命令终端使用
+Use in command line (在命令终端使用)
 ```
-doverjs -s style.css -d index.html
+doverjs -s style.css -d index.html -c
 ```
 
-在nodejs代码中使用
+Use in nodejs app (在nodejs代码中使用)
+
+case : find the unused selectors
 ```javascript
 var dover = require('doverjs');
 dover.cover({style:'style.css', html:'index.html'}, function (resp) {
@@ -48,20 +59,13 @@ dover.cover({style:'style.css', html:'index.html'}, function (resp) {
 });
 ```
 
+case : find and remove the unused selectors
 或者把没用的删除了
 ```javascript
 dover.remove({style:'style.css', html:'index.html'}, function (resp) {
     //resp.....
 });
 ```
-
-## How to use
-
-#### Installing
-
-* Install [node@0.8.x](http://nodejs.org).
-* Install it in npm :
-        `npm install doverjs -g`
     
 #### Helping : 
 
