@@ -85,18 +85,26 @@ function _initialize () {
 //启动方法
 function _start (params) {
 
-	ptParser.cover(params, localPath, function (results, outputs) {
-		var stdout = outputs.stdout, 
-			logOut = outputs.log, 
-			statisticsOut = outputs.statistics;
+	ptParser.cover(params, localPath, function (results /*, outputs*/) {
 
-		program.console && console.log(stdout);
-		program.statistics && console.log(statisticsOut);
+		// return;
+		for (var i = 0; i < results.length; i ++) {
+			var result = results[i], 
+				outputs = result.outputs, 
+				coverResult = result.results;
+				
+			var stdout = outputs.stdout, 
+				logOut = outputs.log, 
+				statisticsOut = outputs.statistics;
 
-		if (outputFile) {
-			fs.writeFileSync(localPath + '\\' + outputFile, logOut, 'UTF-8');
+			program.console && console.log(stdout);
+			program.statistics && console.log(statisticsOut);
+
+			if (outputFile) {
+				fs.writeFileSync(localPath + '\\' + outputFile + '-1', logOut, 'UTF-8');
+			}
+			console.log('Cover Compeleted ! ' + (outputFile ? 'Logged on ' + outputFile + '-1' : ''));
 		}
-		console.log('Cover Compeleted ! ' + (outputFile ? 'Logged on ' + outputFile : ''));
 	});
 }
 /**
